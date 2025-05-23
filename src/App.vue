@@ -1,47 +1,83 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+import Home from './components/Home.vue'
+import Hypervisor from './components/Hypervisor.vue'
+import Map from './components/Map.vue'
+import Robot from './components/Robot.vue'
+import Settings from './components/settings.vue'
+import {ref, onMounted} from "vue"
+
+var hmi_nav_id = ref("none")
+
+
+function select_page(event) 
+{
+  hmi_nav_id.value = event.target.id
+  console.log("Item clicked: ", event.target.id)
+}
+
+onMounted(() => {
+
+})
+
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+    <div class="hmi-nav-container">
+      <ul class="hmi-nav-list">
+        <li :class="['hmi-nav-list-item', { 'hmi-nav-list-item-selected': hmi_nav_id === 'hmi-nav-home' }]" id="hmi-nav-home" @click="select_page"><p>Home</p></li>
+        <li :class="['hmi-nav-list-item', { 'hmi-nav-list-item-selected': hmi_nav_id === 'hmi-nav-map' }]" id="hmi-nav-map" @click="select_page"><p>Map</p></li>
+        <li :class="['hmi-nav-list-item', { 'hmi-nav-list-item-selected': hmi_nav_id === 'hmi-nav-robot' }]" id="hmi-nav-robot" @click="select_page"><p>Robot</p></li>
+        <li :class="['hmi-nav-list-item', { 'hmi-nav-list-item-selected': hmi_nav_id === 'hmi-nav-hypervisor' }]" id="hmi-nav-hypervisor" @click="select_page"><p>Hypervisor</p></li>
+        <li :class="['hmi-nav-list-item', { 'hmi-nav-list-item-selected': hmi_nav_id === 'hmi-nav-settings' }]" id="hmi-nav-settings" @click="select_page"><p>Settings</p></li>
+      </ul>
     </div>
   </header>
 
   <main>
-    <TheWelcome />
+    <div class="hmi-body-container">
+      <div v-if="hmi_nav_id == 'hmi-nav-home'"><Home /></div>
+      <div v-else-if="hmi_nav_id == 'hmi-nav-map'"><Map /></div>
+      <div v-else-if="hmi_nav_id == 'hmi-nav-robot'"><Robot /></div>
+      <div v-else-if="hmi_nav_id == 'hmi-nav-hypervisor'"><Hypervisor /></div>
+      <div v-else-if="hmi_nav_id == 'hmi-nav-settings'"><Settings /></div>
+      <div v-else >404</div>
+    </div>
+    <h1>{{ hmi_nav_id }}</h1>
   </main>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
+.hmi-nav-container {
+  margin-top: 5px;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+.hmi-nav-list {
+  display: flex;
+  list-style-type: none;
+  gap: 5px; 
 }
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
+.hmi-nav-list-item {
+  border: 3px solid darkgray;
+  border-radius: 10px;
+  height: 100px;
+  width: 100%;
+  cursor: pointer;
+  font-size: 30px;
+  color: black;
+}
 
-  .logo {
-    margin: 0 2rem 0 0;
-  }
+.hmi-nav-list-item-selected {
+  background-color: darkred;
+  color: white;
+}
 
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+.hmi-nav-list-item p {
+  text-align: center;
+}
+
+.hmi-body-container {
+  width: 100%;
 }
 </style>
