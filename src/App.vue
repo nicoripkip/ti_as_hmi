@@ -3,11 +3,15 @@ import Home from './components/Home.vue'
 import Hypervisor from './components/Hypervisor.vue'
 import Map from './components/Map.vue'
 import Robot from './components/Robot.vue'
-import Settings from './components/settings.vue'
+import Settings from './components/Settings.vue'
 import {ref, onMounted} from "vue"
+import { globalBuffers } from './buffers'
 
-var hmi_nav_id = ref("none")
-
+var hmi_nav_id = ref("hmi-nav-home")
+// let mqtt_client = connect("ws://145.24.223.53:8989")
+let global_buffers = globalBuffers
+let robot_buffer = global_buffers.robotBuffer()
+robot_buffer.push("Dit is een testje")
 
 function select_page(event) 
 {
@@ -43,13 +47,13 @@ onMounted(() => {
       <div v-else-if="hmi_nav_id == 'hmi-nav-settings'"><Settings /></div>
       <div v-else >404</div>
     </div>
-    <h1>{{ hmi_nav_id }}</h1>
   </main>
 </template>
 
 <style scoped>
 .hmi-nav-container {
   margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .hmi-nav-list {

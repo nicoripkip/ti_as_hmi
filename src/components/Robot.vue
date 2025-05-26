@@ -1,42 +1,66 @@
 <script setup>
-defineProps({
-  msg: {
-    type: String,
-    required: true,
-  },
-})
+
+import {ref} from "vue" 
+import { globalBuffers } from "@/buffers";
+
+let robot_selected = ref("none")
+let global_buffers = globalBuffers
+let robot_buffer = global_buffers.robotBuffer()
+
+console.log(robot_buffer.buffer)
+
 </script>
 
 <template>
-  <div class="greetings">
-    <h1 class="green">{{ msg }}</h1>
-    <h3>
-        Robot
-    </h3>
+  <div class="hmi-page-container">
+    <div class="hmi-page-section-left">
+        <div class="hmi-page-header">
+            <h1>Status + Alarms:</h1>
+        </div>
+    </div>
+    <div class="hmi-page-section-right">
+        <div class="hmi-page-section-item-robot">
+
+        </div>
+
+        <div class="hmi-page-section-item-control">
+            
+        </div>
+    </div>
   </div>
 </template>
 
 <style scoped>
-h1 {
-  font-weight: 500;
-  font-size: 2.6rem;
-  position: relative;
-  top: -10px;
+.hmi-page-container {
+    display: flex;
 }
 
-h3 {
-  font-size: 1.2rem;
+.hmi-page-section-left {
+    border-right: 1px solid darkgray;
+    height: 700px;
+    width: 100%;
 }
 
-.greetings h1,
-.greetings h3 {
-  text-align: center;
+.hmi-page-section-right {
+    border-left: 1px solid darkgray;
+    height: 700px;
+    width: 100%;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
 }
 
-@media (min-width: 1024px) {
-  .greetings h1,
-  .greetings h3 {
-    text-align: left;
-  }
+.hmi-page-header {
+    align-content: center;
+}
+
+.hmi-page-section-item-robot {
+    border-bottom: 1px solid darkgray;
+    height: 100%;
+}
+
+.hmi-page-section-item-control {
+    border-top: 1px solid darkgray;
+    height: 100%;
 }
 </style>
