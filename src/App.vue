@@ -6,12 +6,12 @@ import Robot from './components/Robot.vue'
 import Settings from './components/Settings.vue'
 import {ref, onMounted} from "vue"
 import { globalBuffers } from './buffers'
+import "./mqtt"
 
 var hmi_nav_id = ref("hmi-nav-home")
 // let mqtt_client = connect("ws://145.24.223.53:8989")
 let global_buffers = globalBuffers
 let robot_buffer = global_buffers.robotBuffer()
-robot_buffer.push("Dit is een testje")
 
 function select_page(event) 
 {
